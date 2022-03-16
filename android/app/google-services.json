@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "855761816660",
+    "project_id": "projek-ukk-b9bc2",
+    "storage_bucket": "projek-ukk-b9bc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855761816660:android:7b1313f1a82827781a71c1",
+        "android_client_info": {
+          "package_name": "com.example.ukk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855761816660-fl751dtktkfs1os3qdev2vq1ol9qrrkq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK_6b_kwAPocUldG72mQv6Izy-qBJgTZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855761816660-fl751dtktkfs1os3qdev2vq1ol9qrrkq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

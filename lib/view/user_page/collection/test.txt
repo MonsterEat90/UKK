@@ -1,0 +1,72 @@
+return InkWell(
+      onTap: () {
+        print('card pressed');
+      },
+      child: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(_borderRadius),
+                    gradient: LinearGradient(
+                      colors: const [kLightRedColor, kLightOrange],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: kDarkGreyColor,
+                        blurRadius: 12,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned.fill(
+                  child: Row(
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/images/bag_1.png',
+                        height: 40,
+                        width: 80,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            child: Text('Name of The Collection'),
+                            onTap: () {
+                              print('text pressed');
+                            },
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  print('delete pressed');
+                                }, // provide your click function
+                                icon: Icon(Icons.delete_forever),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  print('edit pressed');
+                                }, // provide your click function
+                                icon: Icon(Icons.edit),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );

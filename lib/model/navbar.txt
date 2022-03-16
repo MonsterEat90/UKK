@@ -1,0 +1,38 @@
+SizedBox(
+                    width: size.width,
+                    height: 80,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.home),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const FaIcon(FontAwesomeIcons.gavel),
+                          onPressed: () {},
+                        ),
+                        Container(
+                          width: size.width * 0.20,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.collections),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.person),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+
+int _page = 0;
+  List<Widget> initialWidgets = <Widget>[
+    HomePage(1),
+    SearchPage(2),
+    CollectionPage(3),
+    ProfilePage(4),
+  ];

@@ -1,0 +1,73 @@
+return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: kWhiteColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: kVeryDarkCyan,
+            ),
+            onPressed: () {
+              //passing this to our root
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
+        body: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Material(
+                    borderRadius: BorderRadius.circular(55),
+                    color: kDarkModerateCyan,
+                    child: Padding(
+                      padding: const EdgeInsets.all(36.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 180,
+                              child: SvgPicture.asset(
+                                "assets/logo.svg",
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            emailField,
+                            SizedBox(
+                              height: 15,
+                            ),
+                            passwordField,
+                            SizedBox(
+                              height: 15,
+                            ),
+                            confirmPasswordField,
+                            SizedBox(
+                              height: 15,
+                            ),
+                            signUpButton,
+                            SizedBox(
+                              height: 15,
+                            ),
+                            resetButton,
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
