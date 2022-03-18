@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ukk/constants/color_constant.dart';
 import 'package:ukk/model/navbar.dart';
 import 'package:ukk/view/authentication/reset_password/reset_password.dart';
-import 'package:ukk/view/authentication/signUp/signup_page.dart';
+import 'package:ukk/view/authentication/signUp/signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -219,7 +219,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SignUpPage(),
+                builder: (context) => SignUp(),
               ),
             );
           },

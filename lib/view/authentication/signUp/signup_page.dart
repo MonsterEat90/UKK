@@ -5,7 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ukk/constants/color_constant.dart';
@@ -24,38 +23,29 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _passwordVisible = true;
   //Form Key
   final _formKey = GlobalKey<FormState>();
+
   File? _image;
   final _picker = ImagePicker();
   String url = "";
-  final collectionNameController = TextEditingController();
+  final imageNameController = TextEditingController();
 
+  var name = "";
+  var phoneNumber = "";
   var email = "";
   var password = "";
   var confirmPassword = "";
 
+  final nameController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  uploadImage() async {
-    var imageFile = FirebaseStorage.instance
-        .ref()
-        .child("collectionImage")
-        .child(basename(_image!.path));
-    UploadTask task = imageFile.putFile(_image!);
-    TaskSnapshot snapshot = await task;
-    //for download
-    url = await snapshot.ref.getDownloadURL();
-    await FirebaseFirestore.instance.collection('collection').doc().set({
-      'imageUrl': url,
-      'collectionName': collectionNameController.text,
-    });
-    print(url);
-  }
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
+    nameController.clear();
+    phoneNumberController.clear();
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
@@ -63,6 +53,8 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   clearText() {
+    nameController.clear();
+    phoneNumberController.clear();
     emailController.clear();
     passwordController.clear();
     confirmPasswordController.clear();
@@ -74,6 +66,21 @@ class _SignUpPageState extends State<SignUpPage> {
     setState(() {
       _image = image;
     });
+  }
+
+  uploadImage() async {
+    var imageFile = FirebaseStorage.instance
+        .ref()
+        .child("usersProfilePic")
+        .child(basename(_image!.path));
+    UploadTask task = imageFile.putFile(_image!);
+    TaskSnapshot snapshot = await task;
+    //for download
+    url = await snapshot.ref.getDownloadURL();
+    // await FirebaseFirestore.instance.collection('user').doc().set({
+    //   'imageProfileUrl': url,
+    // });
+    print(url);
   }
 
   passwordRegistration() async {
@@ -147,13 +154,13 @@ class _SignUpPageState extends State<SignUpPage> {
         password: passwordController.text,
       );
       await FirebaseFirestore.instance.collection('user').add({
-        'email': emailController.text,
-        'password': passwordController.text,
-        'confirmPassword': confirmPasswordController.text,
-        'imageUrl': url,
-        'name': '',
-        'phoneNumber': '',
+        'email': email,
+        'password': password,
+        'confirmPassword': confirmPassword,
+        'name': name,
+        'phoneNumber': phoneNumber,
       });
+      uploadImage();
       await showDialog(
         context: this.context,
         builder: (context) => AlertDialog(
@@ -163,7 +170,12 @@ class _SignUpPageState extends State<SignUpPage> {
             TextButton(
               child: Text('OK'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  this.context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
               },
             ),
           ],
@@ -213,21 +225,53 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
-  // CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-  // Future<void> addUser() {
-  //   return users
-  //       .add({
-  //         'email': email,
-  //         'password': password,
-  //         'confirmPassword': confirmPassword,
-  //       })
-  //       .then((value) => print('User Added'))
-  //       .catchError((error) => print('Failed to Add user: $error'));
-  // }
 
   @override
   Widget build(BuildContext context) {
+    final fileName =
+        _image != null ? basename(_image!.path) : 'No Image Selected';
+    //Name Field
+    final nameField = TextFormField(
+      autofocus: false,
+      controller: nameController,
+      keyboardType: TextInputType.name,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please Enter Your Name';
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.person),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Name",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+    //Phone Number Field
+    final phoneNumberField = TextFormField(
+      autofocus: false,
+      controller: phoneNumberController,
+      keyboardType: TextInputType.phone,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please Enter Your Phone Number';
+        }
+        return null;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.phone),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Phone Number",
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
     //Email Field
     final emailField = TextFormField(
       autofocus: false,
@@ -256,6 +300,7 @@ class _SignUpPageState extends State<SignUpPage> {
       autofocus: false,
       controller: passwordController,
       obscureText: _passwordVisible,
+      keyboardType: TextInputType.visiblePassword,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please Enter Password';
@@ -271,8 +316,9 @@ class _SignUpPageState extends State<SignUpPage> {
           borderRadius: BorderRadius.circular(10),
         ),
         suffixIcon: IconButton(
-          icon:
-              Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off),
+          icon: Icon(
+            _passwordVisible ? Icons.visibility : Icons.visibility_off,
+          ),
           onPressed: () {
             setState(() {
               _passwordVisible = !_passwordVisible;
@@ -286,6 +332,7 @@ class _SignUpPageState extends State<SignUpPage> {
       autofocus: false,
       controller: confirmPasswordController,
       obscureText: _passwordVisible,
+      keyboardType: TextInputType.visiblePassword,
       validator: (value) {
         if (confirmPasswordController.text != passwordController.text) {
           return "Confirm Password doesn't match";
@@ -349,9 +396,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     email = emailController.text;
                     password = passwordController.text;
                     confirmPassword = confirmPasswordController.text;
+                    name = nameController.text;
+                    phoneNumber = phoneNumberController.text;
                     // addUser();
-                    passwordRegistration();
-                    uploadImage();
                     _signUp();
                     clearText();
                   });
@@ -431,62 +478,43 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      decoration: BoxDecoration(
-                        color: kWhiteColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(100),
-                          bottomRight: Radius.circular(100),
-                        ),
-                        gradient: LinearGradient(
-                          colors: const [kDarkModerateCyan, kModerateCyan],
-                          stops: [0.0, 1.0],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 60,
-                          ),
-                          SizedBox(
-                            width: 200,
-                            height: 200,
-                            child: SvgPicture.asset(
-                              'assets/logo.svg',
-                              color: kWhiteColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 30,
                       ),
                       width: MediaQuery.of(context).size.width,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           SizedBox(
-                            height: 15,
+                            height: 35,
                           ),
                           InkWell(
                             onTap: () {
                               getImageFromGallery();
                             },
                             child: CircleAvatar(
-                              radius: 100,
-                              backgroundColor: kWhiteColor,
+                              radius: 80,
+                              backgroundColor: kDarkModerateCyan,
                               backgroundImage: _image == null
                                   ? AssetImage("")
                                   : FileImage(File(_image!.path))
                                       as ImageProvider,
                             ),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            fileName,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          nameField,
+                          SizedBox(
+                            height: 10,
+                          ),
+                          phoneNumberField,
                           SizedBox(
                             height: 10,
                           ),
@@ -508,7 +536,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           resetButton,
                           SizedBox(
-                            height: 50,
+                            height: 30,
                           ),
                           alreadyMember,
                         ],

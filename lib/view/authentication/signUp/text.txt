@@ -71,3 +71,56 @@ return GestureDetector(
         ),
       ),
     );
+
+
+
+
+
+    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: kWhiteColor,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(100),
+                            bottomRight: Radius.circular(100),
+                          ),
+                          gradient: LinearGradient(
+                            colors: const [kDarkModerateCyan, kModerateCyan],
+                            stops: [0.0, 1.0],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 60,
+                            ),
+                            SizedBox(
+                              width: 200,
+                              height: 200,
+                              child: SvgPicture.asset(
+                                'assets/logo.svg',
+                                color: kWhiteColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+
+  // CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  // Future<void> addUser() {
+  //   return users
+  //       .add({
+  //         'email': email,
+  //         'password': password,
+  //         'confirmPassword': confirmPassword,
+  //       })
+  //       .then((value) => print('User Added'))
+  //       .catchError((error) => print('Failed to Add user: $error'));
+  // }

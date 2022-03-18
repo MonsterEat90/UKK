@@ -19,4 +19,6 @@ const kRedColor = Color.fromRGBO(218, 18, 18, 1);
 const kLightRedColor = Color.fromRGBO(255, 99, 99, 1);
 const kLightOrange = Color.fromRGBO(255, 173, 96, 1);
 const kLightOrange2 = Color.fromARGB(255, 240, 189, 141);
+const kLightOrange3 = Color.fromARGB(255, 255, 145, 86);
 const kGreenColor = Color.fromARGB(255, 32, 170, 110);
+const kBlueColor = Color.fromARGB(255, 0, 217, 255);
