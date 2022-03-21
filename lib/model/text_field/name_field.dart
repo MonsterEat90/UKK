@@ -1,5 +1,17 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 import 'package:ukk/constants/color_constant.dart';
+
+// class UpperCaseText extends TextInputFormatter {
+//   @override
+//   TextEditingValue formatEditUpdate(
+//       TextEditingValue oldValue, TextEditingValue newValue) {
+//     return TextEditingValue(
+//       text: newValue.text.toUpperCase(),
+//       selection: newValue.selection,
+//     );
+//   }
+// }
 
 class NameField extends StatelessWidget {
   final TextEditingController inputController;
@@ -13,12 +25,11 @@ class NameField extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
+            // inputFormatters: [UpperCaseText()],
+            textCapitalization: TextCapitalization.words,
             autofocus: false,
             textInputAction: TextInputAction.next,
             controller: inputController,
-            onChanged: (value) {
-              //Do something wi
-            },
             keyboardType: TextInputType.name,
             style: const TextStyle(fontSize: 14, color: Colors.black),
             decoration: InputDecoration(
@@ -46,12 +57,12 @@ class NameField extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter Your Name!';
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (value == null || value.isEmpty) {
+            //     return 'Please Enter Your Name!';
+            //   }
+            //   return null;
+            // },
           ),
         ),
       ],

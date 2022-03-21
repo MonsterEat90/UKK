@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ukk/constants/color_constant.dart';
 
-class SignUpButton extends StatelessWidget {
-  const SignUpButton({Key? key, required this.onPressed}) : super(key: key);
+class LoginButton extends StatelessWidget {
+  const LoginButton({Key? key, required this.onPressed}) : super(key: key);
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 5,
+      elevation: 2,
       borderRadius: BorderRadius.circular(50),
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -18,6 +18,7 @@ class SignUpButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           gradient: const LinearGradient(
             colors: [kDarkModerateCyan, kModerateCyan],
+            stops: [0.0, 1.0],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
@@ -28,15 +29,15 @@ class SignUpButton extends StatelessWidget {
           child: Center(
             child: MaterialButton(
               child: Text(
-                "SignUp",
+                'Login',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.dongle(
-                  fontSize: 28,
                   color: kWhiteColor,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              padding: const EdgeInsets.fromLTRB(20, 10, 10, 15),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 15),
               minWidth: MediaQuery.of(context).size.width,
               onPressed: onPressed,
             ),

@@ -46,14 +46,14 @@ class EmailField extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter Your Email!';
-              } else if (!value.contains('@')) {
-                return 'Please Enter Valid Email!';
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (value == null || value.isEmpty) {
+            //     return 'Please Enter Your Email!';
+            //   } else if (!value.contains('@')) {
+            //     return 'Please Enter Valid Email!';
+            //   }
+            //   return null;
+            // },
           ),
         ),
       ],

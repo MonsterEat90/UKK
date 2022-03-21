@@ -19,9 +19,6 @@ class PasswordField extends StatelessWidget {
             textInputAction: TextInputAction.next,
             obscureText: _passwordVisible,
             controller: inputController,
-            onChanged: (value) {
-              //Do something wi
-            },
             keyboardType: TextInputType.visiblePassword,
             style: const TextStyle(fontSize: 14, color: Colors.black),
             decoration: InputDecoration(
@@ -49,12 +46,12 @@ class PasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter Your Password!';
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (value == null || value.isEmpty) {
+            //     return 'Please Enter Your Password!';
+            //   }
+            //   return null;
+            // },
           ),
         ),
       ],

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ukk/constants/color_constant.dart';
+import 'package:ukk/view/authentication/signUp/signup.dart';
 
-class AlreadyMember extends StatelessWidget {
-  const AlreadyMember({Key? key}) : super(key: key);
+class RegisterNow extends StatelessWidget {
+  const RegisterNow({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,12 +11,12 @@ class AlreadyMember extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         const Text(
-          "Already a Member? ",
+          "Don't have an account?",
           style: TextStyle(color: kZambeziColor),
         ),
         GestureDetector(
           child: const Text(
-            "Login Now",
+            " Register Now",
             style: TextStyle(
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,
@@ -23,7 +24,12 @@ class AlreadyMember extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SignUp(),
+              ),
+            );
           },
         ),
       ],

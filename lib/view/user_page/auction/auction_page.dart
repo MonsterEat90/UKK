@@ -10,6 +10,9 @@ class AuctionPage extends StatefulWidget {
 class _AuctionPageState extends State<AuctionPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(),
+    );
   }
 }

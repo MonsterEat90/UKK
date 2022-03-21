@@ -47,12 +47,12 @@ class PhoneNumberField extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Enter Your Phone Number!';
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (value == null || value.isEmpty) {
+            //     return 'Please Enter Your Phone Number!';
+            //   }
+            //   return null;
+            // },
           ),
         ),
       ],

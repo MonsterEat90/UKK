@@ -49,12 +49,12 @@ class ConfirmPasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please Confirm Your Password!';
-              }
-              return null;
-            },
+            // validator: (value) {
+            //   if (value == null || value.isEmpty) {
+            //     return 'Please Confirm Your Password!';
+            //   }
+            //   return null;
+            // },
           ),
         ),
       ],

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ukk/constants/color_constant.dart';
-import 'package:ukk/view/authentication/signUp/signup_page.dart';
+import 'package:ukk/view/authentication/signUp/signup.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -197,7 +197,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SignUpPage(),
+                                builder: (context) => SignUp(),
                               ),
                             );
                           },

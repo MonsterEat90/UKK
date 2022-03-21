@@ -1,8 +1,7 @@
-// ignore_for_file: deprecated_member_use
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +15,7 @@ import 'package:ukk/model/text_field/email_field.dart';
 import 'package:ukk/model/text_field/name_field.dart';
 import 'package:ukk/model/text_field/password_field.dart';
 import 'package:ukk/model/text_field/phone_number_field.dart';
+import 'package:ukk/view/authentication/login/login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future getImageFromGallery() async {
-    final pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     final File image = File(pickedFile!.path);
     setState(() {
       _image = image;
@@ -60,6 +60,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   uploadImage() async {
+    //upload the image to storage
     var imageFile = FirebaseStorage.instance
         .ref()
         .child("usersProfilePic")
@@ -68,10 +69,50 @@ class _SignUpState extends State<SignUp> {
     TaskSnapshot snapshot = await task;
     //for download
     url = await snapshot.ref.getDownloadURL();
-    await FirebaseFirestore.instance.collection('user').doc().set({
+    print(url);
+    return url;
+  }
+
+  //add user to firebase
+  addUserToFirebase() async {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      print(value.user!.uid);
+      ScaffoldMessenger.of(this.context).showSnackBar(
+        const SnackBar(
+          backgroundColor: kSoftLimeGreen,
+          content: Text(
+            "Registered Successfully. Please Login..",
+            style: TextStyle(fontSize: 20.0),
+          ),
+        ),
+      );
+      Navigator.pushReplacement(
+        this.context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+      );
+    });
+    //add user to firestore
+    await FirebaseFirestore.instance.collection('users').doc().set({
+      'name': name,
+      'phoneNumber': phoneNumber,
+      'email': email,
+      'password': password,
+      'confirmPassword': confirmPassword,
       'imageProfileUrl': url,
     });
-    print(url);
+
+    // await FirebaseFirestore.instance.collection('users').doc().set({
+    //   'name': name,
+    //   'phoneNumber': phoneNumber,
+    //   'email': email,
+    //   'password': password,
+    //   'confirmPassword': confirmPassword,
+    //   'imageProfileUrl': url,
+    // });
   }
 
   @override
@@ -81,7 +122,7 @@ class _SignUpState extends State<SignUp> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: kWhiteColor,
+        backgroundColor: kPowderBlue,
         body: Form(
           key: _formKey,
           child: Stack(
@@ -101,9 +142,13 @@ class _SignUpState extends State<SignUp> {
                             onTap: () {
                               getImageFromGallery();
                             },
-                            child: const CircleAvatar(
-                              radius: 70,
+                            child: CircleAvatar(
+                              radius: 80,
                               backgroundColor: kDarkModerateCyan,
+                              backgroundImage: _image == null
+                                  ? const AssetImage("profile image")
+                                  : FileImage(File(_image!.path))
+                                      as ImageProvider,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -135,6 +180,9 @@ class _SignUpState extends State<SignUp> {
                                       confirmPasswordController.text;
                                   name = nameController.text;
                                   phoneNumber = phoneNumberController.text;
+                                  uploadImage();
+                                  addUserToFirebase();
+                                  // addUserToFirestore();
                                 });
                               }
                             },
