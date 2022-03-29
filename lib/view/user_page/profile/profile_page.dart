@@ -58,10 +58,9 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: kLightOrange,
         elevation: 2,
-        title: Text(
+        title: const Text(
           "Profile",
-          style: GoogleFonts.dongle(
-            fontSize: 28,
+          style: TextStyle(
             color: kWhiteColor,
             fontWeight: FontWeight.bold,
           ),

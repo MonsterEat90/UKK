@@ -689,3 +689,15 @@ uploadImage() async {
 
     //for download
   }
+
+
+
+
+  // add user profile picture to firestore
+    // await FirebaseFirestore.instance
+    //     .collection('usersProfilePic')
+    //     .doc(email)
+    //     .set({
+    //   'email': email,
+    //   'imageProfileUrl': snapshot.ref.getDownloadURL(),
+    // });

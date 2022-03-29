@@ -1,0 +1,3 @@
+? const Icon(Icons.favorite, color: Color(0xFFEF7532))
+                        : const Icon(Icons.favorite_border,
+                            color: Color(0xFFEF7532))

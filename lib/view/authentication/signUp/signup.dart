@@ -64,6 +64,7 @@ class _SignUpState extends State<SignUp> {
     var imageFile = FirebaseStorage.instance
         .ref()
         .child("usersProfilePic")
+        .child(email)
         .child(basename(_image!.path));
     UploadTask task = imageFile.putFile(_image!);
     TaskSnapshot snapshot = await task;
@@ -73,7 +74,7 @@ class _SignUpState extends State<SignUp> {
     return url;
   }
 
-  //add user to firebase
+  // add user to firebase
   addUserToFirebase() async {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
@@ -96,23 +97,13 @@ class _SignUpState extends State<SignUp> {
       );
     });
     //add user to firestore
-    await FirebaseFirestore.instance.collection('users').doc().set({
+    await FirebaseFirestore.instance.collection('users').doc(email).set({
       'name': name,
       'phoneNumber': phoneNumber,
       'email': email,
       'password': password,
       'confirmPassword': confirmPassword,
-      'imageProfileUrl': url,
     });
-
-    // await FirebaseFirestore.instance.collection('users').doc().set({
-    //   'name': name,
-    //   'phoneNumber': phoneNumber,
-    //   'email': email,
-    //   'password': password,
-    //   'confirmPassword': confirmPassword,
-    //   'imageProfileUrl': url,
-    // });
   }
 
   @override
@@ -182,7 +173,6 @@ class _SignUpState extends State<SignUp> {
                                   phoneNumber = phoneNumberController.text;
                                   uploadImage();
                                   addUserToFirebase();
-                                  // addUserToFirestore();
                                 });
                               }
                             },

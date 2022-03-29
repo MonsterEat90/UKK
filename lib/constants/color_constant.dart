@@ -12,6 +12,7 @@ const kDarkModerateCyan = Color.fromRGBO(53, 133, 139, 1);
 const kModerateCyan = Color.fromRGBO(79, 189, 186, 1);
 const kPowderBlue = Color.fromRGBO(176, 224, 230, 1);
 const kAuctionColorBg = Color.fromARGB(255, 199, 234, 238);
+const kAuctionColorAppBar = Color.fromARGB(255, 97, 209, 221);
 const kDarkBlue = Color.fromRGBO(34, 87, 122, 1);
 const kPurple = Color.fromARGB(255, 62, 38, 102);
 const kModerateCyanLimeGreen = Color.fromRGBO(87, 204, 153, 1);
